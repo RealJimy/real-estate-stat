@@ -1,3 +1,4 @@
+### Install as an application
 ```shell
 $ python3 -m pip install git+https://github.com/RealJimy/real-estate-stat.git
 $ rs-stat --help
