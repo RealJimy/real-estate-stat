@@ -10,6 +10,7 @@ packages = [{include = "real_estate_stat"}]
 python = "^3.9"
 aiohttp = "^3.8.3"
 asgiref = "^3.6.0"
+sodapy = "^2.2.0"
 
 [tool.poetry.scripts]
 rs-stat = "real_estate_stat.rs_stat:main"
