@@ -9,6 +9,8 @@ packages = [{include = "real_estate_stat"}]
 [tool.poetry.dependencies]
 python = "^3.9"
 
+[tool.poetry.scripts]
+rs-stat = "real_estate_stat.rs_stat:main"
 
 [build-system]
 requires = ["poetry-core"]

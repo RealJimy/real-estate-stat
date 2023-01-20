@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 
 import time
-from decorator import decorator
+from real_estate_stat.decorator import make_table
 from real_estate_stat.real_estate_stat import RealEstateStat
 from real_estate_stat.client_factory import get_client
 
@@ -21,7 +21,7 @@ cli = get_client(
 stat = RealEstateStat(client=cli)
 
 # Decorator to beautify console output
-decorate = decorator(cols=2)
+decorate = make_table(cols=2)
 
 # Collect statistics for range of years (all arguments are optional)
 result = stat.collect(

@@ -1,7 +1,7 @@
 from tabulate import tabulate
 
 
-def decorator(cols=2):
+def make_table(cols=2):
     """
     Decorate console output
     """
