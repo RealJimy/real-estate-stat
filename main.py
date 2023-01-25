@@ -21,7 +21,7 @@ cli = get_client(
 stat = RealEstateStat(client=cli)
 
 # Decorator to beautify console output
-decorate = make_table(cols=2)
+decorate = make_table(columns=2)
 
 # Collect statistics for range of years (all arguments are optional)
 result = stat.collect(

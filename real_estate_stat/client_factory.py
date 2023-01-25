@@ -4,7 +4,9 @@ from sodapy import Socrata
 
 
 def get_client(*args, name="async", **kwargs):
-
+    """
+    Instance and return client based on 'name' parameter
+    """
     if name == 'async':
         return _async_socrata(*args, **kwargs)
     elif name == 'sync':
@@ -37,6 +39,6 @@ def _sync_socrata(host, id, token=None, timeout=None):
     if timeout:
         params['timeout'] = timeout
 
-    socrata = Socrata(host, token, **params)
-    return SodapyWrapper(socrata, id)
+    socrata_client = Socrata(host, token, **params)
+    return SodapyWrapper(socrata_client, id)
 

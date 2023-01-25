@@ -1,7 +1,7 @@
 from tabulate import tabulate
 
 
-def make_table(cols=2):
+def make_table(columns=2):
     """
     Decorate console output
     """
@@ -10,36 +10,54 @@ def make_table(cols=2):
             print("No data received")
             return None
 
+        # User freindly table headers
         titles = {
             'top_sales_ratio': 'Sales ratio',
             'top_volume_number': 'Number of deals',
             'top_volume_usd': 'Money',
         }
 
-        cols_loc = min(cols, len(data))
-        keys_ = list(data[0].keys())
+        data_len = len(data)
 
-        rows_cnt = len(data)
-        if cols_loc > 1:
-            rows_cnt = int(len(data) / cols_loc)
-            if len(data) % cols_loc != 0:
-                rows_cnt += 1
+        # Number of columns 
+        column_cnt = min(columns, data_len)
 
-        result = []
-        result.append(keys_ * cols_loc)
+        column_keys = list(data[0].keys())
 
+        # Calculate number of rows
+        row_cnt = data_len
+        if column_cnt > 1:
+            row_cnt = int(data_len / column_cnt)
+            if data_len % column_cnt != 0:
+                row_cnt += 1
+
+        table_rows = []
+        # The first row contains keys for the table header
+        table_rows.append(column_keys * column_cnt)
+
+        # Fill the table
         for i, item in enumerate(data):
-            i_ = i % rows_cnt + 1
-            if i_ >= len(result):
-                result.append([])
 
-            for key in keys_:
+            row_number = i % row_cnt + 1
+
+            if row_number >= len(table_rows):
+                table_rows.append([])
+
+            for key in column_keys:
                 if key in item:
-                    result[i_].append(item[key] if key == 'year' else '\n'.join('Error' if 'errors' in item[key] else item[key]['towns']))
-                else:
-                    result[i_].append('???')
 
-        result[0] = map(lambda x: x.capitalize() if x == 'year' else titles[x], result[0])
-        return tabulate(result, tablefmt="fancy_grid")
+                    # Format cell
+                    value = item[key]
+                    if key != 'year':
+                        value = 'Error' if 'errors' in value else '\n'.join(value['towns'])
+                    table_rows[row_number].append(value)
+                else:
+                    table_rows[row_number].append('No data')
+
+        # Replce keys to user friendly header 
+        table_rows[0] = map(lambda x: x.capitalize() if x == 'year' else titles[x], table_rows[0])
+
+        # Format table and return
+        return tabulate(table_rows, tablefmt="fancy_grid")
             
     return inner

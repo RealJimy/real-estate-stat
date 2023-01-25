@@ -93,6 +93,9 @@ class RealEstateStat:
 
 
     def _process_responses(self, responses, from_year, to_year):
+        """
+        Format API response to apropriate data structure
+        """
         result = [None] * (to_year - from_year + 1)
 
         responses.sort(key=lambda x: x['key'])

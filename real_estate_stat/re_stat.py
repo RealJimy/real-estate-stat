@@ -17,8 +17,8 @@ def main():
     argParser.add_argument("-tk", "--token", help="Socrata app_token")
     argParser.add_argument("-l", "--limit", type=int, help="number of towns in response")
     argParser.add_argument("-to", "--timeout", type=int, help="timeout for API requests")
-    argParser.add_argument("-d", "--decorate", help="flag for switch on decoration", action='store_false')
-    argParser.add_argument("-b", "--benchmark", help="show time duration", action='store_false')
+    argParser.add_argument("-d", "--decorate", help="flag for switch off decoration", action='store_false')
+    argParser.add_argument("-b", "--benchmark", help="hide time duration", action='store_false')
 
     args = argParser.parse_args()
 
@@ -52,7 +52,7 @@ def main():
         collect_params['to_year'] = args.to_year
     decorate = None
     if args.decorate:
-        decorate = make_table(cols=2)
+        decorate = make_table(columns=2)
     if args.limit:
         collect_params['limit'] = args.limit
 

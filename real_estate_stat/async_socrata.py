@@ -3,6 +3,7 @@ import asyncio
 from asgiref import sync
 import urllib.parse
 
+# HTTP Requests timout
 _DEFAULT_TIMEOUT = 10
 
 _DEFAULT_API_PATH = '/resource/'
@@ -10,10 +11,11 @@ _DEFAULT_API_PATH = '/resource/'
 
 class AsyncSocrata:
 
+    # HTTP Headers
     headers = {}
 
     def __init__(self, host, id, token=None, timeout=_DEFAULT_TIMEOUT):
-        self.base_url = f'https://{host}{_DEFAULT_API_PATH}{id}.json'
+        self._api_url = f'https://{host}{_DEFAULT_API_PATH}{id}.json'
         if token:
             self.headers['X-App-Token'] = token
         self.timeout = timeout
@@ -25,21 +27,25 @@ class AsyncSocrata:
         """
         for params in params_list:
             query_params = urllib.parse.urlencode(self._prep_params(**params['params']))
-            params['url'] = f'{self.base_url}?{query_params}'
+            params['url'] = f'{self._api_url}?{query_params}'
         return self.async_get_all(params_list)
 
 
     def async_get_all(self, request_list):
         """
-        Performs asynchronous requests
+        Performs asynchronous requests for all urls in the list
         """
         async def get_all(headers, tasks, timeout):
+
             session_timeout = aiohttp.ClientTimeout(total=timeout)
             async with aiohttp.ClientSession(headers=headers, timeout=session_timeout) as session:
+
                 async def fetch(task):
+
                     async with session.get(task.get('url')) as response:
                         task['response_data'] = await response.json()
                         return task
+
                 return await asyncio.gather(*[fetch(task) for task in tasks])
 
         return sync.async_to_sync(get_all)(
