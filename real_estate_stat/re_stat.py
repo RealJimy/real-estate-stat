@@ -17,8 +17,8 @@ def main():
     argParser.add_argument("-tk", "--token", help="Socrata app_token")
     argParser.add_argument("-l", "--limit", type=int, help="number of towns in response")
     argParser.add_argument("-to", "--timeout", type=int, help="timeout for API requests")
-    argParser.add_argument("-d", "--decorate", help="flag for switch off decoration", action='store_false')
-    argParser.add_argument("-b", "--benchmark", help="hide time duration", action='store_false')
+    argParser.add_argument("-d", "--decorate_off", help="flag for switch off decoration", action='store_false')
+    argParser.add_argument("-b", "--benchmark_off", help="hide time duration", action='store_false')
 
     args = argParser.parse_args()
 
